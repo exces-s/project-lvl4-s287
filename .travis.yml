@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+  - stable
+
+script:
+  - make lint
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "664f2874-9a8c-4b75-8e92-edaa8dd156cf"
+  app: task-manager-lebedev
+  run: "node dist/bin/index.js"

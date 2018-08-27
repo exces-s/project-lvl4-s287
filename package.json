@@ -1,0 +1,43 @@
+{
+  "name": "task-manager-lebedev",
+  "version": "0.1.0",
+  "description": "simple task manager",
+  "main": "dist/bin/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "9"
+  },
+  "scripts": {
+    "babel": "babel",
+    "babel-node": "babel-node",
+    "test": "jest",
+    "eslint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exces-s/project-lvl4-s287.git"
+  },
+  "author": "Artem Lebedev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/exces-s/project-lvl4-s287/issues"
+  },
+  "homepage": "https://github.com/exces-s/project-lvl4-s287#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
+    "koa": "^2.5.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.0",
+    "jest": "^23.5.0",
+    "supertest": "^3.1.0"
+  }
+}

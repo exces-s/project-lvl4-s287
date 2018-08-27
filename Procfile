@@ -1,1 +1,1 @@
-web: make start
+web: npm run babel-node -- src/bin/index.js

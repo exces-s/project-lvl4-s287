@@ -39,13 +39,16 @@
     "css-loader": "^1.0.0",
     "gulp": "^3.9.1",
     "koa": "^2.5.2",
+    "koa-pug": "^3.0.0-2",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-webpack": "^5.1.0",
+    "lodash": "^4.17.10",
     "postcss-loader": "^3.0.0",
     "precss": "^3.1.2",
     "rollbar": "^2.4.4",
     "style-loader": "^0.23.0",
+    "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
@@ -55,7 +58,6 @@
     "eslint-plugin-jest": "^21.22.0",
     "jest": "^23.5.0",
     "supertest": "^3.1.0",
-    "webpack": "^4.17.1",
     "webpack-dev-server": "^3.1.6"
   }
 }

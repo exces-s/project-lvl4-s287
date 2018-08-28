@@ -1,6 +1,6 @@
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/assets/index.js',
+  entry: ['./src/assets/index.js'],
   output: {
     publicPath: 'dist/',
   },

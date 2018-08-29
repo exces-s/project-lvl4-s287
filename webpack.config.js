@@ -1,8 +1,14 @@
+const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // eslint-disable-line
+
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
+  devtool: 'source-map',
   entry: ['./src/assets/index.js'],
   output: {
-    publicPath: 'dist/',
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/assets/',
   },
   module: {
     rules: [
@@ -13,9 +19,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: [
+          'style-loader',
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'postcss-loader',
+        ],
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+  ],
 };

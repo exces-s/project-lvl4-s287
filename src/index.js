@@ -4,16 +4,17 @@ import Router from 'koa-router';
 import koaWebpack from 'koa-webpack';
 import serve from 'koa-static';
 import Rollbar from 'rollbar';
-import webpack from 'webpack';
 import Pug from 'koa-pug';
 import path from 'path';
-import config from '../webpack.config';
+import dotenv from 'dotenv';
+import webpackConfig from '../webpack.config';
 
+
+dotenv.config();
 
 const app = new Koa();
 const router = new Router();
-const rollbar = new Rollbar('52d7eb6a0e554fdc9a59d7410b26a108');
-const compiler = webpack(config);
+const rollbar = new Rollbar(process.env.ROLLBAR);
 
 router
   .get('/', (ctx, next) => {
@@ -21,21 +22,27 @@ router
     next();
   });
 
+// if (process.env.NODE_ENV !== 'production') {
+//   app.use(middleware({
+//     config: webpackConfig,
+//   }));
+// }
 
-koaWebpack({ compiler })
+app
+  .use(async (ctx, next) => {
+    try {
+      await next();
+    } catch (err) {
+      rollbar.error(err, ctx.request);
+    }
+  })
+  .use(serve(path.resolve(__dirname, './assets')))
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+koaWebpack({ config: webpackConfig })
   .then((middleware) => {
-    app
-      .use(async (ctx, next) => {
-        try {
-          await next();
-        } catch (err) {
-          rollbar.error(err, ctx.request);
-        }
-      })
-      .use(middleware)
-      .use(serve(`${__dirname}/assets`))
-      .use(router.routes())
-      .use(router.allowedMethods());
+    app.use(middleware);
   });
 
 const pug = new Pug({

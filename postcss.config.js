@@ -1,6 +1,6 @@
 module.exports = {
   plugins: [
-    require('precss'),
-    require('autoprefixer')
+    require('precss'),      // eslint-disable-line
+    require('autoprefixer') // eslint-disable-line
   ],
 };

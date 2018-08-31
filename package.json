@@ -15,7 +15,8 @@
     "test": "jest",
     "eslint": "eslint",
     "dev": "NODE_ENV=development webpack-dev-server --progress --open",
-    "build": "NODE_ENV=production webpack --progress"
+    "build": "npm run webpack -- -p --env production",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

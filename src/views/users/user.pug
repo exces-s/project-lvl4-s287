@@ -1,0 +1,18 @@
+extends /layouts/application.pug
+
+block content
+  .container
+  .row
+    .col-9
+      +jumbo()
+        - const user = formData.object.dataValues;
+        h2 Данные пользователя:
+        br
+        h4 Имя: <strong>#{user.firstName}</strong>
+        h4 Фамилия: <strong>#{user.lastName}</strong>
+        h4 Электронная почта: <strong>#{user.email}</strong>
+        h4 Дата создания аккаунта: <strong>#{user.createdAt}</strong>
+    .col-3
+      +jumbo()
+        +accButtons()
+        

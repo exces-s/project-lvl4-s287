@@ -1,0 +1,13 @@
+extends /layouts/application.pug
+
+
+block content
+  if flash.get()
+    +displayFlash(flash.get())
+
+  +jumbo(800)
+    h1.mb-2 Simple Task Manager
+      p.lead
+        | Это учебный проект по созданию простого менеджера задач. Для продолжения необходимо зарегистрироваться или войти, если у вас уже есть учетная запись.
+      a.btn.btn-lg.btn-primary.mr-3(href='/users/new', role='button') Регистрация
+      a.btn.btn-lg.btn-primary(href='/session/new', role='button') Вход

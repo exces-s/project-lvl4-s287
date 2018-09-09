@@ -1,0 +1,46 @@
+extends /layouts/application.pug
+
+block content
+  +jumbo(600)
+    h2.mx-auto.mb-3 Регистрация:
+    +formFor(formData, { url: urlFor('users'), method: 'post' })
+      +input(formData, 'email')
+      +input(formData, 'firstName')
+      +input(formData, 'lastName')
+      +input(formData, 'password', { as: 'password' })
+      +button(formData)
+
+//- ====================================================
+
+//- formObjectBuilder:
+//- export default (object, error = { errors: [] }) => ({
+//-   name: 'form',
+//-   object,
+//-   errors: _.groupBy(error.errors, 'path'),
+//- });
+
+//- ====================================================
+
+//- mixins:
+//- - const getInputName = (formData, property) => `${formData.name}[${property}]`
+
+//- mixin formFor(formData, options = {})     // { formData: buildFormObj(user) }
+//-   - const url = _.get(options, 'url');
+//-   - const method = _.get(options, 'method', 'get').toLowerCase();
+//-   - const isStandart = _.includes(['get', 'post'], method);
+//-   form(action= url method= isStandart ? method : 'post')
+//-     if !isStandart
+//-       input(name='_method' type='hidden' value= method)
+//-     block
+
+//- mixin input(formData, property, options = { as: 'text' })
+//-   - const value = formData.object[property] === undefined ? '' : formData.object[property]
+//-   .form-group(class=(formData.errors[property] && 'has-danger'))
+//-     label= property
+//-     input(name=getInputName(formData, property) class='form-control' type=options['as'] value=`${value}`)
+//-     if formData.errors[property]
+//-       .form-control-feedback= formData.errors[property].map(({ message }) => message).join('. ')
+
+//- mixin button(formData, type = 'submit', value = 'Отправить')
+//-   .form-group
+//-     input(class='btn' type=`${type}` value=`${value}`)

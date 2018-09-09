@@ -1,0 +1,17 @@
+extends /layouts/application.pug
+
+block content
+  -const isErrInPrevReq = formData.object.email;
+  if isErrInPrevReq
+    .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+      | Неправильный логин или праоль.
+      button.close(type='button', data-dismiss='alert', aria-label='Close')
+        span(aria-hidden='true') ×
+
+
+  +jumbo(600)
+    h2.mx-auto.mb-3 Вход:
+    +formFor(formData, { url: urlFor('session'), method: 'post' })
+      +input(formData, 'email')
+      +input(formData, 'password', { as: 'password' })
+      +button(formData)

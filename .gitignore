@@ -2,3 +2,4 @@
 /dist
 4project_workspace.code-workspace
 /.env
+*.sqlite

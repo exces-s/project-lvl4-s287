@@ -1,0 +1,36 @@
+include /mixins/forms.pug
+
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Simple Task Manager
+    link(rel='stylesheet' href='/assets/style.css')
+
+  body
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
+      strong
+        a.navbar-brand(href='/') Simple Task Manager
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/users') Пользователи
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/tasks') Задачи
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+        ul.navbar-nav.mt-2.mt-md-0
+          if isSignedIn()
+            li.nav-item
+              -const link = `/users/${userId}`
+              a.nav-link(href=link) Мой аккаунт
+    main.container(role='main')
+      block content
+      block footer
+    script(src='/assets/bundle.js')

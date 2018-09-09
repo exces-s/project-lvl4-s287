@@ -1,0 +1,57 @@
+- const getInputName = (formData, property) => `${formData.name}[${property}]`;
+
+mixin formFor(formData, options = {})
+  - const url = _.get(options, 'url');
+  - const method = _.get(options, 'method', 'get').toLowerCase();
+  - const isStandart = _.includes(['get', 'post'], method);
+  form(action= url method= isStandart ? method : 'post')
+    if !isStandart
+      input(name='_method' type='hidden' value= method)
+    block
+
+mixin input(formData, property, options = { as: 'text' })
+  - const value = formData.object[property] === undefined ? '' : formData.object[property]
+  .form-group(class=(formData.errors[property] && 'has-danger'))
+    label.mb-0= property
+    input(name=getInputName(formData, property) class='form-control' type=options['as'] value=`${value}`)
+    if formData.errors[property]
+      .form-control-feedback= formData.errors[property].map(({ message }) => message).join('. ')
+
+mixin button(formData, type = 'submit', value = 'Отправить')
+  .form-group
+    input(class='btn btn-primary' type=`${type}` value=`${value}`)
+
+mixin jumbo(width = '')
+  .jumbotron.mx-auto(style=`width: ${width}px;`)
+    block
+
+mixin displayFlash({ message, type = 'alert-primary' })
+  div(class=`alert ${type} alert-dismissible fade show` role='alert')
+    | #{message}
+    button.close(type='button', data-dismiss='alert', aria-label='Close')
+      span(aria-hidden='true') &times;
+
+mixin accButtons()
+  form.mb-3(action='/session?_method=DELETE' method='post')
+    +button(formData, 'submit', 'Выйти')
+  form.mb-3(action=`/users/${userId}/edit` method='get')
+    +button(formData, 'submit', 'Изменить данные')
+  button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal') Удалить аккаунт
+
+  //- button.btn.btn-danger(type='button', data-toggle='modal', data-target='#exampleModal') Удалить аккаунт
+  //- form.mb-3(action=`/users/${userId}?_method=DELETE` method='post')
+  //-   +button(formData, 'submit', 'Удалить аккаунт')
+
+  #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Вы уверены, что хотите удалить свой аккаунт?
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form.mb-3(action=`/users/${userId}?_method=DELETE` method='post')
+            +button(formData, 'submit', 'Удалить аккаунт')
+
+
+

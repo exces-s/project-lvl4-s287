@@ -1,0 +1,16 @@
+extends /layouts/application.pug
+
+block content
+  table.table.table-stripped
+    thead
+      tr
+        th Full Name
+        th Email
+        th Created At
+    tbody
+      each user in users
+        - fullName = `${user.firstName} ${user.lastName}`;
+        tr
+          td= fullName
+          td= user.email
+          td= user.createdAt

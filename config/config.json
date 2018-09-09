@@ -8,7 +8,7 @@
     "dialect": "sqlite"
   },
   "production": {
-    "use_env_variable": "DB_URI",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
   }
 }

@@ -7,7 +7,7 @@ import serve from 'koa-static';
 import Rollbar from 'rollbar';
 import Pug from 'koa-pug';
 import path from 'path';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import session from 'koa-session';
 import flash from 'koa-flash-simple';
 import koaLogger from 'koa-logger';
@@ -18,7 +18,7 @@ import addRoutes from './routes';
 import container from './container';
 
 
-dotenv.config();
+// dotenv.config();
 
 const app = new Koa();
 const rollbar = new Rollbar(process.env.ROLLBAR);

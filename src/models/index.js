@@ -9,11 +9,6 @@ const db = {};
 
 let sequelize;
 
-console.log('env:', env);
-console.log('config:', config);
-console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-console.log('process.env[config.use_env_variable]:', process.env[config.use_env_variable]);
-
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {

@@ -32,12 +32,7 @@ export default (router) => {
       const { id } = ctx.params;
       if (ctx.state.isAuth(id)) {
         const user = await User.findOne({ where: { id } });
-        try {
-          ctx.render('users/user', { formData: buildFormObj(user) });
-        } catch (e) {
-          create500(ctx);
-          console.log(e);
-        }
+        ctx.render('users/user', { formData: buildFormObj(user) });
       } else {
         create403(ctx);
       }
@@ -65,12 +60,7 @@ export default (router) => {
       const { id } = ctx.params;
       if (ctx.state.isAuth(id)) {
         const user = await User.findOne({ where: { id } });
-        try {
-          ctx.render('users/edit', { formData: buildFormObj(user) });
-        } catch (e) {
-          create500(ctx);
-          console.log(e);
-        }
+        ctx.render('users/edit', { formData: buildFormObj(user) });
       } else {
         create403(ctx);
       }

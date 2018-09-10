@@ -13,7 +13,7 @@ import flash from 'koa-flash-simple';
 import koaLogger from 'koa-logger';
 import methodOverride from 'koa-methodoverride';
 import webpackConfig from '../webpack.config';
-import handleErr from './lib/handleErr';
+// import handleErr from './lib/handleErr';
 import addRoutes from './routes';
 import container from './container';
 
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV !== ('production' && 'test')) {
     });
 }
 
-app.use(handleErr);
+// app.use(handleErr);
 app
   .use(koaLogger())
   .use(bodyParser())

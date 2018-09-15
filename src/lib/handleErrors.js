@@ -24,33 +24,3 @@ export default () => async (ctx, next) => {
     }
   }
 };
-
-
-// app.use(async (ctx, next) => {
-//   try {
-//     await next();
-//     if (ctx.status === 404) {
-//       ctx.throw(404);
-//     }
-//   } catch (err) {
-//     ctx.status = err.status || 500;
-//     const message = ctx.status === 404 ? 'The page you are looking for was not found.' : 'Something wrong.';
-//     ctx.app.emit('error', err, ctx);
-//     if (devMode) {
-//       ctx.body = err.message;
-//       return;
-//     }
-//     if (ctx.status === 401) {
-//       await ctx.render('errors/reqAuth');
-//       return;
-//     }
-//     await ctx.render('errors/error', { status: ctx.status, message });
-//   }
-// });
-
-// app.on('error', (err, ctx) => {
-//   if (productionMode) {
-//     rollbar.error(err, ctx.request);
-//   }
-//   log('Error %s', err.message);
-// });

@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'Поле не должно быть пустым',
+          msg: 'Field must not be empty',
         },
       },
     },
@@ -20,9 +20,9 @@ export default (sequelize, DataTypes) => {
 };
 
 
-    // name: обязательно
-    // description: не обязательно
-    // status: обязательно, по умолчанию 'новый'. Список берется из справочника TaskStatus
-    // creator: обязательно, автор задачи
-    // assignedTo: тот на кого поставлена задача
-    // tags: связь m2m с тегами
+// name: обязательно
+// description: не обязательно
+// status: обязательно, по умолчанию 'новый'. Список берется из справочника TaskStatus
+// creator: обязательно, автор задачи
+// assignedTo: тот на кого поставлена задача
+// tags: связь m2m с тегами

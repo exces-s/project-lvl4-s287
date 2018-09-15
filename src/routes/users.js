@@ -1,13 +1,14 @@
+import requiredAuth from '../lib/requirredAuth';
+import checkPermissions from '../lib/checkPermissions';
 import buildFormObj from '../lib/formObjectBuilder';
 import setFlashData from '../lib/setFlashData';
-import create403 from '../lib/create403';
-import create500 from '../lib/create500';
+// import create500 from '../lib/create500';
 import { User } from '../models';
 
 
 export default (router) => {
   router
-    .get('users', '/users', async (ctx) => {
+    .get('users', '/users', requiredAuth, async (ctx) => {
       const users = await User.findAll();
       ctx.render('users', { users });
     })
@@ -21,74 +22,56 @@ export default (router) => {
       try {
         await user.save();
         const type = 'alert-success';
-        const message = `Пользователь ${form.email} успешно создан`;
+        const message = `User ${form.email} successfully created`;
         ctx.flash.set(setFlashData(message, type));
         ctx.redirect(router.url('root'));
       } catch (e) {
         ctx.render('users/new', { formData: buildFormObj(user, e) });
       }
     })
-    .get('user', '/users/:id', async (ctx) => {
+    .get('user', '/users/:id', checkPermissions, async (ctx) => {
       const { id } = ctx.params;
-      if (ctx.state.isAuth(id)) {
-        const user = await User.findOne({ where: { id } });
-        ctx.render('users/user', { formData: buildFormObj(user) });
-      } else {
-        create403(ctx);
+      const user = await User.findOne({ where: { id } });
+      ctx.render('users/user', { formData: buildFormObj(user) });
+    })
+    .del('deleteUser', '/users/:id', checkPermissions, async (ctx) => {
+      const { id } = ctx.params;
+      const user = await User.findOne({ where: { id } });
+      try {
+        await user.destroy();
+        const type = 'alert-warning';
+        const message = 'Account was deleted';
+        ctx.flash.set(setFlashData(message, type));
+        ctx.session = {};
+      } catch (e) {
+        ctx.throw(500);
+        // create500(ctx);
       }
     })
-    .del('deleteUser', '/users/:id', async (ctx) => {
+    .get('editForm', '/users/:id/edit', checkPermissions, async (ctx) => {
       const { id } = ctx.params;
-      if (ctx.state.isAuth(id)) {
-        const user = await User.findOne({ where: { id } });
-        try {
-          await user.destroy();
-          const type = 'alert-warning';
-          const message = 'Пользователь был удален';
-          ctx.flash.set(setFlashData(message, type));
-          ctx.session = {};
-        } catch (e) {
-          create500(ctx);
-          console.log(e);
-        }
-      } else {
-        create403(ctx);
-      }
-      ctx.redirect(router.url('root'));
+      const user = await User.findOne({ where: { id } });
+      ctx.render('users/edit', { formData: buildFormObj(user) });
     })
-    .get('editForm', '/users/:id/edit', async (ctx) => {
-      const { id } = ctx.params;
-      if (ctx.state.isAuth(id)) {
-        const user = await User.findOne({ where: { id } });
-        ctx.render('users/edit', { formData: buildFormObj(user) });
-      } else {
-        create403(ctx);
-      }
-    })
-    .patch('patchUser', '/users/:id', async (ctx) => {
+    .patch('patchUser', '/users/:id', checkPermissions, async (ctx) => {
       const { form } = ctx.request.body;
       const { id } = ctx.params;
-      if (ctx.state.isAuth(id)) {
-        const user = await User.findOne({ where: { id } });
-        try {
-          await user.update({
-            firstName: form.firstName,
-            lastName: form.lastName,
-            password: form.password,
-          },
-          {
-            where: { id },
-          });
-          const type = 'alert-success';
-          const message = 'Данные были изменены';
-          ctx.flash.set(setFlashData(message, type));
-          ctx.redirect(router.url('root'));
-        } catch (e) {
-          ctx.render('users/edit', { formData: buildFormObj(user, e) });
-          console.log(e);
-        }
-      } else {
-        create403(ctx);
+      const user = await User.findOne({ where: { id } });
+      try {
+        await user.update({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          password: form.password,
+        },
+        {
+          where: { id },
+        });
+        const type = 'alert-success';
+        const message = 'Данные были изменены';
+        ctx.flash.set(setFlashData(message, type));
+        ctx.redirect(router.url('root'));
+      } catch (e) {
+        ctx.render('users/edit', { formData: buildFormObj(user, e) });
       }
     });
 };

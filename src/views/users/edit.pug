@@ -2,7 +2,7 @@ extends /layouts/application.pug
 
 block content
   +jumbo(600)
-    h2.mx-auto.mb-3 Изменить данные:
+    h2.mx-auto.mb-3 Change account data:
     +formFor(formData, { url: `/users/${userId}?_method=PATCH`, method: 'post' })
       +input(formData, 'firstName')
       +input(formData, 'lastName')

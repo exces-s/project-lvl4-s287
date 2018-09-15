@@ -6,12 +6,12 @@ block content
     .col-9
       +jumbo()
         - const user = formData.object.dataValues;
-        h2 Данные пользователя:
+        h2 Account data:
         br
-        h4 Имя: <strong>#{user.firstName}</strong>
-        h4 Фамилия: <strong>#{user.lastName}</strong>
-        h4 Электронная почта: <strong>#{user.email}</strong>
-        h4 Дата создания аккаунта: <strong>#{user.createdAt}</strong>
+        h4 First Name: <strong>#{user.firstName}</strong>
+        h4 Last Name: <strong>#{user.lastName}</strong>
+        h4 Email: <strong>#{user.email}</strong>
+        h4 Creation date: <strong>#{user.createdAt}</strong>
     .col-3
       +jumbo()
         +accButtons()

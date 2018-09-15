@@ -2,7 +2,7 @@ extends /layouts/application.pug
 
 block content
   +jumbo(600)
-    h2.mx-auto.mb-3 Регистрация:
+    h2.mx-auto.mb-3 Sign up:
     +formFor(formData, { url: urlFor('users'), method: 'post' })
       +input(formData, 'email')
       +input(formData, 'firstName')

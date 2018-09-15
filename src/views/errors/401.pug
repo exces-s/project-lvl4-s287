@@ -1,0 +1,7 @@
+extends /layouts/application.pug
+
+block content
+  +jumbo(600)
+    h1.text-center 401
+    .alert.alert-primary(role='alert').
+      Для доступа необходимо <a href=urlFor('newSession')>войти</a>

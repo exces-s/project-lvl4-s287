@@ -13,23 +13,28 @@ html(lang='en')
   body
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
       strong
-        a.navbar-brand(href='/') Simple Task Manager
+        a.navbar-brand(href=urlFor('root')) Simple Task Manager
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarCollapse.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item
-            a.nav-link(href='/users') Пользователи
+            a.nav-link(href=urlFor('users')) Users
               span.sr-only (current)
           li.nav-item
-            a.nav-link(href='/tasks') Задачи
+            a.nav-link(href=urlFor('tasks')) Tasks
       #navbarCollapse.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
         ul.navbar-nav.mt-2.mt-md-0
           if isSignedIn()
             li.nav-item
               -const link = `/users/${userId}`
-              a.nav-link(href=link) Мой аккаунт
+              a.nav-link(href=link) My account
+          else
+            li.nav-item
+              a.nav-link(href=urlFor('newUser')) Sign up
+            li.nav-item
+              a.nav-link(href=urlFor('newSession')) Sign in 
     main.container(role='main')
       block content
       block footer

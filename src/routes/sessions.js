@@ -1,3 +1,5 @@
+import requiredAuth from '../lib/requirredAuth';
+// import checkPermissions from '../lib/checkPermissions';
 import buildFormObj from '../lib/formObjectBuilder';
 import encrypt from '../lib/encrypt';
 import { User } from '../models';
@@ -13,12 +15,12 @@ export default (router) => {
       const user = await User.findOne({ where: { email } });
       if (user && user.passwordDigest === encrypt(password)) {
         ctx.session.userId = user.id;
-        ctx.redirect(router.url('root'));
+        ctx.redirect(router.url('tasks'));
         return;
       }
       ctx.render('sessions/new', { formData: buildFormObj({ email }) });
     })
-    .delete('session', '/session', (ctx) => {
+    .delete('session', '/session', requiredAuth, (ctx) => {
       ctx.session = {};
       ctx.redirect(router.url('root'));
     });

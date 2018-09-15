@@ -13,7 +13,7 @@ import flash from 'koa-flash-simple';
 import koaLogger from 'koa-logger';
 import methodOverride from 'koa-methodoverride';
 import webpackConfig from '../webpack.config';
-// import handleErr from './lib/handleErr';
+import handleErrors from './lib/handleErrors';
 import addRoutes from './routes';
 import container from './container';
 
@@ -21,10 +21,11 @@ import container from './container';
 dotenv.config();
 
 const app = new Koa();
-const rollbar = new Rollbar(process.env.ROLLBAR);
+export const rollbar = new Rollbar(process.env.ROLLBAR);
 const router = new Router();
 addRoutes(router, container);
 
+app.use(handleErrors());
 app.keys = ['some secret hurr'];
 
 if (process.env.NODE_ENV !== ('production' && 'test')) {
@@ -34,7 +35,6 @@ if (process.env.NODE_ENV !== ('production' && 'test')) {
     });
 }
 
-// app.use(handleErr);
 app
   .use(koaLogger())
   .use(bodyParser())
@@ -50,17 +50,16 @@ app
     };
     await next();
   })
-  .use(async (ctx, next) => {
-    try {
-      await next();
-    } catch (err) {
-      rollbar.error(err, ctx.request);
-    }
-  })
+  // .use(async (ctx, next) => {
+  //   try {
+  //     await next();
+  //   } catch (err) {
+  //     rollbar.error(err, ctx.request);
+  //   }
+  // })
   .use(serve(path.resolve(__dirname, './assets')))
   .use(router.allowedMethods())
   .use(router.routes());
-
 
 const pug = new Pug({
   viewPath: path.join(__dirname, 'views'),

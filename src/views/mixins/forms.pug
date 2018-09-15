@@ -11,13 +11,14 @@ mixin formFor(formData, options = {})
 
 mixin input(formData, property, options = { as: 'text' })
   - const value = formData.object[property] === undefined ? '' : formData.object[property]
+  - const requiredAttribute = options.as === 'password' ? '' : false;
   .form-group(class=(formData.errors[property] && 'has-danger'))
     label.mb-0= property
-    input(name=getInputName(formData, property) class='form-control' type=options['as'] value=`${value}`)
+    input(name=getInputName(formData, property) class='form-control' type=options['as'] value=`${value}` required=requiredAttribute)
     if formData.errors[property]
       .form-control-feedback= formData.errors[property].map(({ message }) => message).join('. ')
 
-mixin button(formData, type = 'submit', value = 'Отправить')
+mixin button(formData, type = 'submit', value = 'Submit')
   .form-group
     input(class='btn btn-primary' type=`${type}` value=`${value}`)
 
@@ -33,10 +34,10 @@ mixin displayFlash({ message, type = 'alert-primary' })
 
 mixin accButtons()
   form.mb-3(action='/session?_method=DELETE' method='post')
-    +button(formData, 'submit', 'Выйти')
+    +button(formData, 'submit', 'Log out')
   form.mb-3(action=`/users/${userId}/edit` method='get')
-    +button(formData, 'submit', 'Изменить данные')
-  button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal') Удалить аккаунт
+    +button(formData, 'submit', 'Change account data')
+  button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal') Delete account
 
   //- button.btn.btn-danger(type='button', data-toggle='modal', data-target='#exampleModal') Удалить аккаунт
   //- form.mb-3(action=`/users/${userId}?_method=DELETE` method='post')
@@ -46,12 +47,12 @@ mixin accButtons()
     .modal-dialog(role='document')
       .modal-content
         .modal-header
-          h5#exampleModalLabel.modal-title Вы уверены, что хотите удалить свой аккаунт?
+          h5#exampleModalLabel.modal-title Do you really want to delete your account?
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') ×
         .modal-body
           form.mb-3(action=`/users/${userId}?_method=DELETE` method='post')
-            +button(formData, 'submit', 'Удалить аккаунт')
+            +button(formData, 'submit', 'Delete account')
 
 
 

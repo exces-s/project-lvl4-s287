@@ -1,5 +1,65 @@
 extends /layouts/application.pug
 
 block content
-  +jumbo(600)
-    h1.text-center Tasks
+  .container-fluid
+    .row
+      .col
+        //- Button for add task
+        button.btn.btn-primary.mb-3(type='button', data-toggle='modal', data-target='.bd-example-modal-lg') + Add task
+        //- Modal window for add task
+        .modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+          .modal-dialog.modal-lg
+            .modal-content
+              .modal-header
+                h5#exampleModalLabel.modal-title Add task
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+              .modal-body
+                //- Form for new task
+                form
+                  .row
+                    .col
+                      input.form-control.mb-3(placeholder='Task', type='text')
+                  .form-group
+                    textarea#exampleFormControlTextarea1.form-control(placeholder='Description (optional)', rows='3')
+                  .row
+                    .col
+                      select#inlineFormCustomSelectPref.custom-select.my-1.mr-sm-2
+                        option(selected='') Status
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+                    .col
+                      select#inlineFormCustomSelectPref.custom-select.my-1.mr-sm-2
+                        option(selected='') AssignedTo
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+
+                //- End form for new task
+              .modal-footer
+                button.btn.btn-primary(type='button') Add
+                button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+        
+      //- Table here:
+    .row
+      .col
+        table.table.table-sm.table-hover.table-responsive
+          thead.thead-dark
+            tr
+              th.col-1(scope='col')
+              th.col-7(scope='col') Description
+              th.col-2(scope='col') Creator
+              th.col-2(scope='col') AssignedTo
+          tbody
+            tr
+              td Mark
+              td Сделать самый офигенный и приятный на внешний вид простой таск менеджер, чтобы все офишели от того, какой я крутой
+              td @mdo
+            tr
+              td Jacob
+              td Thornton
+              td @fat
+            tr
+              td(colspan='2') Larry the Bird
+              td @twitter

@@ -9,12 +9,12 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: {
         args: true,
-        msg: 'Этот почтовый ящик уже используется',
+        msg: 'This email is already in use',
       },
       validate: {
         isEmail: {
           args: true,
-          msg: 'Введите корректный адрес',
+          msg: 'Enter a valid email',
         },
       },
     },
@@ -31,12 +31,12 @@ export default (sequelize, DataTypes) => {
         this.setDataValue('password', value);
         return value;
       },
-      validate: {
-        len: {
-          args: [1, +Infinity],
-          msg: 'Слишком короткий пароль',
-        },
-      },
+      // validate: {
+      //   len: {
+      //     args: [1, +Infinity],
+      //     msg: 'Слишком короткий пароль',
+      //   },
+      // },
     },
   }, {
     classMethods: {
